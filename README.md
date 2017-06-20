@@ -1,5 +1,5 @@
 # ambryfs
-Ambryfs is a filesystem implemented in fuse and backed by Ambry
+Ambryfs is a filesystem implemented in fuse and backed by Ambry. It currently only supports read and delete operations.
 
 Disclaimer
 ===========
@@ -21,7 +21,7 @@ Once compiled run:
 
 Where
 
-    -s run fuse in single threaded mode (multithreaded is not supported in this revision)
+    -s run fuse in single threaded mode (multithreaded mode is not supported in this revision)
     --ambry_base_url is the endpoint address for your Ambry frontend
     --ambry_port is the port of your Ambry frontend
     depot is the mountpoint of your filesystem
@@ -29,7 +29,7 @@ Where
 Typical use case
 ==================
 
-Given a known Ambry Blob Id you can cat it using standard cat command:
+Given a known Ambry Blob Id you can cat it using a standard cat command:
 
 
     $ # Assuming your fs is mounted into "depot" directory
