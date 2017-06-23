@@ -36,6 +36,12 @@ Given a known Ambry Blob Id you can cat it using a standard cat command:
     $cat depot/AAEAAQAAAAAAAAAAAAAAJDdiZGQxODYyLTQzMGEtNDA5NC1hZTcxLTY4ZGE4NGMyMDE1Ng
     this is a test content
     $ # This command just triggered an Ambry request and pulled the blob in
+    $ # Let's delete the blob now
+    $rm depot/AAEAAQAAAAAAAAAAAAAAJDdiZGQxODYyLTQzMGEtNDA5NC1hZTcxLTY4ZGE4NGMyMDE1Ng
+    $ # Let's try to access the deleted blob
+    $cat depot/AAEAAQAAAAAAAAAAAAAAJDdiZGQxODYyLTQzMGEtNDA5NC1hZTcxLTY4ZGE4NGMyMDE1Ng
+    cat: depot/AAEAAQAAAAAAAAAAAAAAJDdiZGQxODYyLTQzMGEtNDA5NC1hZTcxLTY4ZGE4NGMyMDE1Ng: No such file or directory
+    $
 
 Additional References
 ==============
