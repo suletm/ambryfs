@@ -5,6 +5,7 @@
 */
 
 #define FUSE_USE_VERSION 30
+#define BUFSIZE 2000
 
 #include <fuse.h>
 #include <stdio.h>
@@ -69,14 +70,14 @@ static int do_unlink(const char *path)
 {
     CURL *curl;
     CURLcode res;
-    char url[2000]; // max url size per https://stackoverflow.com/questions/417142/what-is-the-maximum-length-of-a-url-in-different-browsers
+    char url[BUFSIZE]; // max url size per https://stackoverflow.com/questions/417142/what-is-the-maximum-length-of-a-url-in-different-browsers
 
     curl = curl_easy_init();
 
     #ifdef FUSE_VERBOSE
         fprintf(stderr,"unlink(): Blob name received in if_blob_exists: %s\n", path);
     #endif
-    sprintf(url, "%s%s",options.ambry_base_url, path);
+    snprintf(url,BUFSIZE, "%s%s",options.ambry_base_url, path);
     #ifdef FUSE_VERBOSE
         fprintf(stderr,"Url constructed in unlink: %s\n", url);
     #endif
@@ -141,14 +142,14 @@ static int if_blob_exists(const char *blob_name)
 {
     CURL *curl;
     CURLcode res;
-    char url[2000]; // max url size per https://stackoverflow.com/questions/417142/what-is-the-maximum-length-of-a-url-in-different-browsers
+    char url[BUFSIZE]; // max url size per https://stackoverflow.com/questions/417142/what-is-the-maximum-length-of-a-url-in-different-browsers
     double content_length;
     int status;
 
     #ifdef FUSE_VERBOSE
         fprintf(stderr,"Blob name received in if_blob_exists: %s\n", blob_name);
     #endif
-    sprintf(url, "%s%s",options.ambry_base_url,blob_name);
+    snprintf(url,BUFSIZE, "%s%s",options.ambry_base_url,blob_name);
     #ifdef FUSE_VERBOSE
         fprintf(stderr,"Url constructed in if_blob_exists: %s\n", url);
     #endif
@@ -222,7 +223,7 @@ static int do_read (const char *path, char *buf, size_t size, off_t offset, stru
 {
     CURL *curl;
     CURLcode res;
-    char url[2000];
+    char url[BUFSIZE];
     double len;
     struct MemoryPool userdata;
     if (offset == 0)
@@ -231,7 +232,7 @@ static int do_read (const char *path, char *buf, size_t size, off_t offset, stru
     #ifdef FUSE_VERBOSE
         fprintf(stderr, "do_read(): triggered for path: %s\n", path);
     #endif
-    sprintf(url, "%s%s",options.ambry_base_url,path);
+    snprintf(url,BUFSIZE, "%s%s",options.ambry_base_url,path);
     #ifdef FUSE_VERBOSE
         fprintf(stderr, "do_read(): constructed Ambry URL: %s\n", url);
     #endif
@@ -351,4 +352,5 @@ int main( int argc, char *argv[] )
 
 	return fuse_main( args.argc, args.argv, &operations, NULL );
 }
+
 
